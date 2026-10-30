@@ -183,17 +183,17 @@ crontab -e
 
 | Category | Responsible Contact(s) |
 |---|---|
-| Estate Office - Electrical | nikita, venkatsai, sasank, ritika |
-| Estate Office - AC | apoorv, yatri |
-| Estate Office - Civil | hrunav |
-| Estate Office - Carpentry related | hrunav |
-| Estate Office - Chairs | hrunav |
-| Estate Office - Plumbing | aalhad |
-| Estate Office - Housekeeping & Gardening | swetha, vivek |
-| Estate Office - Washing Machine | aalhad |
-| Estate Office - Water Cooler | nikita, venkatsai, sasank, ritika |
-| IT Office - Network & Wifi | roshni |
-| IT Office - Audio & Video Issue | roshni |
+| Estate Office - Electrical | Electrical vertical leads (×4) |
+| Estate Office - AC | AC vertical leads (×2) |
+| Estate Office - Civil | Civil vertical lead |
+| Estate Office - Carpentry related | Civil vertical lead |
+| Estate Office - Chairs | Civil vertical lead |
+| Estate Office - Plumbing | Plumbing vertical lead |
+| Estate Office - Housekeeping & Gardening | Housekeeping vertical leads (×2) |
+| Estate Office - Washing Machine | Plumbing vertical lead |
+| Estate Office - Water Cooler | Electrical vertical leads (×4) |
+| IT Office - Network & Wifi | IT vertical lead |
+| IT Office - Audio & Video Issue | IT vertical lead |
 
 > To update contacts or add new categories, edit `VERTICAL_EMAIL_MAP` and `INCLUDED_CATEGORIES` in `ticket_notifier.py`.
 
