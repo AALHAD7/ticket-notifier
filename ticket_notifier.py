@@ -420,7 +420,17 @@ def send_email(to_addr, subject, body):
     msg["From"] = GMAIL_ADDRESS
     msg["To"] = to_addr
 
-    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+    # Try SSL port 465 first (works on restricted/campus networks), fallback to 587 STARTTLS
+    try:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=20) as server:
+            server.ehlo()
+            server.login(GMAIL_ADDRESS, GMAIL_APP_PASSWORD)
+            server.send_message(msg)
+            return
+    except Exception as ssl_err:
+        pass
+
+    with smtplib.SMTP("smtp.gmail.com", 587, timeout=20) as server:
         server.ehlo()
         server.starttls()
         server.ehlo()
