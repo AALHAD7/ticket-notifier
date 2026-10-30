@@ -21,7 +21,27 @@ else
 fi
 
 echo "Running with: $PYTHON_BIN"
-echo "Checking tickets and syncing..."
+echo "🔍 Checking login session..."
+"$PYTHON_BIN" "$SCRIPT_DIR/ticket_notifier.py" --check-session >/dev/null 2>&1
+CHECK_STATUS=$?
+
+if [ $CHECK_STATUS -ne 0 ]; then
+    echo "⚠️  Login session expired or not logged in."
+    echo "🔑 Opening browser for Google login..."
+    "$PYTHON_BIN" "$SCRIPT_DIR/Google Login.py"
+    echo ""
+    echo "🔄 Re-verifying login session..."
+    "$PYTHON_BIN" "$SCRIPT_DIR/ticket_notifier.py" --check-session >/dev/null 2>&1
+    if [ $? -ne 0 ]; then
+        echo "❌ Still not logged in. Aborting."
+        echo ""
+        read -n 1 -s -r -p "Press any key to close this window..."
+        exit 1
+    fi
+fi
+
+echo "✅ Login session active."
+echo "🚀 Checking tickets and syncing..."
 echo "----------------------------------------------------------"
 
 "$PYTHON_BIN" "$SCRIPT_DIR/ticket_notifier.py"

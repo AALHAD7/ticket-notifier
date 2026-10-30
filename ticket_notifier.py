@@ -147,6 +147,31 @@ def goto_with_retry(page, url, attempts=3, timeout_ms=20000, wait_until="domcont
     raise last_err
 
 
+def check_session():
+    """Checks whether the saved browser session is still valid without scraping."""
+    if not PROFILE_DIR.exists():
+        return False
+    try:
+        with sync_playwright() as p:
+            context = p.chromium.launch_persistent_context(
+                user_data_dir=str(PROFILE_DIR),
+                headless=True,
+            )
+            page = context.new_page()
+            try:
+                page.goto(PORTAL_TICKETS_URL, wait_until="domcontentloaded", timeout=15000)
+                page.wait_for_load_state("networkidle", timeout=10000)
+            except Exception:
+                pass
+            url = page.url
+            context.close()
+            if "accounts.google.com" in url or "iimt-terminal" in url:
+                return False
+            return "ticket-list" in url
+    except Exception:
+        return False
+
+
 def scrape_open_tickets():
     """Uses the persistent Google SSO browser profile to fetch tickets."""
     if not PROFILE_DIR.exists():
@@ -431,12 +456,7 @@ def main():
         all_tickets = scrape_open_tickets()
     except SessionExpiredError as e:
         print(f"ERROR: {e}")
-        try:
-            send_email(GMAIL_ADDRESS, "[Ticket Notifier] Session expired",
-                       f"{e}\n\nRe-run 'Google Login.py' on the machine running this script.")
-        except Exception as mail_err:
-            print(f"Also failed to send alert email: {mail_err}")
-        raise SystemExit(1)
+        raise SystemExit(2)
     except Exception as e:
         print(f"ERROR: scrape failed: {e}")
         try:
@@ -488,4 +508,12 @@ def main():
 
 
 if __name__ == "__main__":
+    import sys
+    if "--check-session" in sys.argv:
+        if check_session():
+            print("Session valid.")
+            sys.exit(0)
+        else:
+            print("Session expired or missing.")
+            sys.exit(1)
     main()

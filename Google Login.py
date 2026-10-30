@@ -1,12 +1,25 @@
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright
 
-# Persistent browser profile shared with ticket_notifier.py. Using the same
-# profile directory (not just a cookie snapshot) keeps the browser identity
-# consistent across runs, which is much less likely to get flagged/killed by
-# Google's login anomaly detection than replaying cookies in a fresh headless
-# context each time.
+ENV_PATH = Path(__file__).parent / ".env"
+load_dotenv(ENV_PATH)
+
+PORTAL_BASE = os.environ.get("PORTAL_BASE_URL", "https://emp.iimtrichy.ac.in").rstrip("/")
+LOGIN_URL = f"{PORTAL_BASE}/iimt-terminal"
 PROFILE_DIR = Path(__file__).parent / "browser_profile"
+
+print("")
+print("==========================================================")
+print("              🔑 GOOGLE LOGIN SETUP")
+print("=========================================================="
+)
+print("A browser window will open.")
+print("1. Log in with your Google account.")
+print("2. Once logged in and on the portal, return to this window.")
+print("==========================================================")
+print("")
 
 with sync_playwright() as p:
     context = p.chromium.launch_persistent_context(
@@ -14,6 +27,8 @@ with sync_playwright() as p:
         headless=False,
     )
     page = context.new_page()
-    page.goto("https://emp.iimtrichy.ac.in/iimt-terminal", wait_until="domcontentloaded")
-    input("Log in manually in the opened browser, then press Enter here...")
+    page.goto(LOGIN_URL, wait_until="domcontentloaded")
+    input("👉 After logging in successfully, press [Enter] here to continue...")
     context.close()
+
+print("✅ Login session saved.")
