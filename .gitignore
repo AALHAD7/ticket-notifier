@@ -1,0 +1,16 @@
+# Secrets — never commit
+.env
+
+# Auto-generated state and logs
+notified_tickets.json
+ticket_notifier.log
+
+# Persistent browser session — contains Google login cookies
+browser_profile/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# macOS metadata
+.DS_Store
