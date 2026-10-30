@@ -1,4 +1,4 @@
 #!/bin/bash
-cd "/Users/aalhad/ticket-notifier" || exit 1
-/opt/anaconda3/bin/python3 "Google Login.py"
-/opt/anaconda3/bin/python3 ticket_notifier.py
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+python3 "$SCRIPT_DIR/Google Login.py"
+python3 "$SCRIPT_DIR/ticket_notifier.py"

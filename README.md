@@ -7,7 +7,7 @@
 
 ## What does this system do?
 
-The ticket portal at `emp.iimtrichy.ac.in` receives maintenance and IT complaints raised by students (e.g. "AC not working in Hostel B, Room 203"). The portal is checked manually by staff, but there's no automated way for student committee members to know when a new ticket in their domain has been raised.
+The campus employee ticket portal receives maintenance and IT complaints raised by students (e.g. "AC not working in Hostel B, Room 203"). The portal is checked manually by staff, but there's no automated way for student committee members to know when a new ticket in their domain has been raised.
 
 This system bridges that gap:
 
@@ -146,7 +146,7 @@ Secure the file: `chmod 600 .env`
 python3 "Google Login.py"
 ```
 
-A visible Chrome window will open. Log into `emp.iimtrichy.ac.in` using your Google account. Once you're on the portal, press **Enter** in the terminal. The session is saved to `browser_profile/`.
+A visible Chrome window will open. Log into the portal using your Google account. Once you're in, press **Enter** in the terminal. The session is saved to `browser_profile/`.
 
 > Repeat this step whenever the script reports a session-expired error.
 
@@ -174,7 +174,7 @@ This runs `ticket_notifier.py` at **9:00 AM and 5:00 PM** daily. Logs go to `tic
 ```bash
 crontab -e
 # Add:
-0 9,17 * * * /Users/aalhad/ticket-notifier/run_ticket_notifier.sh
+0 9,17 * * * /path/to/ticket-notifier/run_ticket_notifier.sh
 ```
 
 ---

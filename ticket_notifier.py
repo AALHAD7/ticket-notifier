@@ -66,8 +66,8 @@ load_dotenv(Path(__file__).parent / ".env")
 # CONFIG - edit this section
 # ----------------------------------------------------------------------------
 
-PORTAL_BASE = "https://emp.iimtrichy.ac.in"
-PORTAL_TICKETS_URL = f"{PORTAL_BASE}/employee/ticket-list" #https://emp.iimtrichy.ac.in/employee/ticket-list
+PORTAL_BASE = os.environ.get("PORTAL_BASE_URL")  # Set in .env
+PORTAL_TICKETS_URL = f"{PORTAL_BASE}/employee/ticket-list"
 
 # Persistent Google SSO browser profile, created/refreshed by "Google Login.py".
 PROFILE_DIR = Path(__file__).parent / "browser_profile"
@@ -96,17 +96,17 @@ INCLUDED_CATEGORIES = {
 # Fill in the real email address responsible for each vertical.
 # Group several categories under the same email if one person covers them.
 VERTICAL_EMAIL_MAP = {
-    "Estate Office - Electrical": ["nikita.p25197@iimtrichy.ac.in", "venkatsai.p25355@iimtrichy.ac.in", "sasank.p26036@iimtrichy.ac.in", "ritika.p26050@iimtrichy.ac.in"],
-    "Estate Office - AC": ["apoorv.p25410@iimtrichy.ac.in", "yatri.p25121@iimtrichy.ac.in"],
-    "Estate Office - Civil": ["hrunav.p25267@iimtrichy.ac.in"],
-    "Estate Office - Carpentry related": ["hrunav.p25267@iimtrichy.ac.in"],
-    "Estate Office - Chairs": ["hrunav.p25267@iimtrichy.ac.in"],
-    "Estate Office - Plumbing": ["aalhad.p25438@iimtrichy.ac.in"],
-    "Estate Office - Housekeeping and Gardening": ["swetha.hr25041@iimtrichy.ac.in", "vivek.p25444@iimtrichy.ac.in"],
-    "Estate Office - Washing Machine": ["aalhad.p25438@iimtrichy.ac.in"],
-    "Estate Office - Water Cooler": ["nikita.p25197@iimtrichy.ac.in", "venkatsai.p25355@iimtrichy.ac.in", "sasank.p26036@iimtrichy.ac.in", "ritika.p26050@iimtrichy.ac.in"],
-    "IT Office - Network & Wifi": ["roshni.p25364@iimtrichy.ac.in"],
-    "IT Office - Audio & Video Issue": ["roshni.p25364@iimtrichy.ac.in"],
+    "Estate Office - Electrical": ["contact1@yourdomain.ac.in", "contact2@yourdomain.ac.in"],
+    "Estate Office - AC": ["contact3@yourdomain.ac.in"],
+    "Estate Office - Civil": ["contact4@yourdomain.ac.in"],
+    "Estate Office - Carpentry related": ["contact4@yourdomain.ac.in"],
+    "Estate Office - Chairs": ["contact4@yourdomain.ac.in"],
+    "Estate Office - Plumbing": ["contact5@yourdomain.ac.in"],
+    "Estate Office - Housekeeping and Gardening": ["contact6@yourdomain.ac.in"],
+    "Estate Office - Washing Machine": ["contact5@yourdomain.ac.in"],
+    "Estate Office - Water Cooler": ["contact1@yourdomain.ac.in", "contact2@yourdomain.ac.in"],
+    "IT Office - Network & Wifi": ["contact7@yourdomain.ac.in"],
+    "IT Office - Audio & Video Issue": ["contact7@yourdomain.ac.in"],
 }
 
 # Only tickets created on/after this date will ever be considered (initial floor).
@@ -115,7 +115,7 @@ CUTOFF_DATE = datetime(2026, 7, 15)
 # Local state file that remembers which ticket IDs were already emailed.
 STATE_FILE = Path(__file__).parent / "notified_tickets.json"
 
-GMAIL_ADDRESS = os.environ.get("GMAIL_ADDRESS", "iitcommittee@iimtrichy.ac.in")
+GMAIL_ADDRESS = os.environ.get("GMAIL_ADDRESS")
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD")
 
 NVIDIA_API_KEY = os.environ.get("NVIDIA_API_KEY")
